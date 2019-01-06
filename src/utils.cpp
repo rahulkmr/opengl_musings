@@ -1,9 +1,11 @@
 #include <iostream>
 
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 #include "utils.h"
-
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 void initAndSetHints() {
     glfwInit();
@@ -40,11 +42,32 @@ unsigned int createShader(GLenum shaderType, const char* shaderSource) {
     return shader;
 }
 
-unsigned int createProgram(std::initializer_list<int> shaders) {
+unsigned int createProgram(std::initializer_list<unsigned int> shaders) {
     unsigned int program = glCreateProgram();
     for (auto shader : shaders) {
         glAttachShader(program, shader);
     }
     glLinkProgram(program);
     return program;
+}
+
+unsigned int createTexture(const char* textureFileName) {
+    unsigned int texture;
+    glGenTextures(1, &texture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    int width, height, numChannels;
+    unsigned char *data = stbi_load(textureFileName, &width, &height, &numChannels, 0);
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    } else {
+        std::cout << "Failed to load texture." << std::endl;
+    }
+    stbi_image_free(data);
+    return texture;
 }

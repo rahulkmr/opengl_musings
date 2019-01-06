@@ -16,6 +16,7 @@ include_directories(
 
 add_library(glad src/glad.c)
 add_library(utils src/utils.cpp)
+add_library(shader src/shader.cpp)
 
 add_executable(hello_window src/hello_window.cpp)
 target_link_libraries(

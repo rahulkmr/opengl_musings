@@ -43,3 +43,9 @@ add_executable(position_and_color src/position_and_color.cpp)
 target_link_libraries(
     position_and_color ${OPENGL_LIBRARIES} glfw glad utils
 )
+
+
+add_executable(texture src/texture.cpp)
+target_link_libraries(
+    texture ${OPENGL_LIBRARIES} glfw glad shader utils
+)

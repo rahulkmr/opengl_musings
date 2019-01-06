@@ -42,21 +42,21 @@ int main() {
     int success;
     char infoLog[512];
 
-    int vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
+    unsigned int vertexShader = createShader(GL_VERTEX_SHADER, vertexShaderSource);
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl; 
     }
 
-    int fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+    unsigned int fragmentShader = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl; 
     }
 
-    int shaderProgram = createProgram({vertexShader, fragmentShader});
+    unsigned int shaderProgram = createProgram({vertexShader, fragmentShader});
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
     if (!success) {
         glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);

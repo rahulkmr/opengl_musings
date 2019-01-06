@@ -9,8 +9,10 @@ const unsigned int HEIGHT = 600;
 void initAndSetHints();
 GLFWwindow* createWindow(int width, int height);
 
-int createShader(GLenum shaderType, const char* shaderSource);
+unsigned int createShader(GLenum shaderType, const char* shaderSource);
 
-int createProgram(std::initializer_list<int> shaders);
+unsigned int createProgram(std::initializer_list<unsigned int> shaders);
+
+unsigned int createTexture(const char* textureFileName);
 
 #endif

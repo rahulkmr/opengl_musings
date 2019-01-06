@@ -33,15 +33,15 @@ GLFWwindow* createWindow(int width, int height) {
 }
 
 
-int createShader(GLenum shaderType, const char* shaderSource) {
-    int shader = glCreateShader(shaderType);
+unsigned int createShader(GLenum shaderType, const char* shaderSource) {
+    unsigned int shader = glCreateShader(shaderType);
     glShaderSource(shader, 1, &shaderSource, NULL);
     glCompileShader(shader);
     return shader;
 }
 
-int createProgram(std::initializer_list<int> shaders) {
-    int program = glCreateProgram();
+unsigned int createProgram(std::initializer_list<int> shaders) {
+    unsigned int program = glCreateProgram();
     for (auto shader : shaders) {
         glAttachShader(program, shader);
     }

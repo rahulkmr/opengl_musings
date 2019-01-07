@@ -51,7 +51,9 @@ unsigned int createProgram(std::initializer_list<unsigned int> shaders) {
     return program;
 }
 
-void createTexture(unsigned int* texture, const char* textureFileName) {
+void createTexture(unsigned int *texture, const char *textureFileName,
+                   bool flipVerticallyOnLoad, bool hasAlpha)
+{
     glGenTextures(1, texture);
     glBindTexture(GL_TEXTURE_2D, *texture);
 
@@ -61,11 +63,16 @@ void createTexture(unsigned int* texture, const char* textureFileName) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, numChannels;
+    stbi_set_flip_vertically_on_load(flipVerticallyOnLoad);
     unsigned char *data = stbi_load(textureFileName, &width, &height, &numChannels, 0);
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    if (data)
+    {
+        auto rgb = hasAlpha ? GL_RGBA : GL_RGB;
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, rgb, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
-    } else {
+    }
+    else
+    {
         std::cout << "Failed to load texture." << std::endl;
     }
     stbi_image_free(data);

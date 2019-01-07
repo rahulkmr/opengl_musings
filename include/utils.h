@@ -13,6 +13,7 @@ unsigned int createShader(GLenum shaderType, const char* shaderSource);
 
 unsigned int createProgram(std::initializer_list<unsigned int> shaders);
 
-void createTexture(unsigned int* texture, const char* textureFileName);
+void createTexture(unsigned int* texture, const char* textureFileName,
+    bool flipVerticallyOnLoad = true, bool hasAlpha = false);
 
 #endif

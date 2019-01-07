@@ -49,3 +49,8 @@ add_executable(texture src/texture.cpp)
 target_link_libraries(
     texture ${OPENGL_LIBRARIES} glfw glad shader utils
 )
+
+add_executable(transform src/transform.cpp)
+target_link_libraries(
+    transform ${OPENGL_LIBRARIES} glfw glad shader utils
+)

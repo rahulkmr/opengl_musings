@@ -66,3 +66,8 @@ add_executable(rotating src/rotating.cpp)
 target_link_libraries(
     rotating ${OPENGL_LIBRARIES} glfw glad shader utils
 )
+
+add_executable(more_cubes src/more_cubes.cpp)
+target_link_libraries(
+    more_cubes ${OPENGL_LIBRARIES} glfw glad shader utils
+)

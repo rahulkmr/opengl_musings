@@ -77,3 +77,9 @@ add_executable(rotate_camera src/rotate_camera.cpp)
 target_link_libraries(
     rotate_camera ${OPENGL_LIBRARIES} glfw glad shader utils
 )
+
+
+add_executable(walk_around src/walk_around.cpp)
+target_link_libraries(
+    walk_around ${OPENGL_LIBRARIES} glfw glad shader utils
+)

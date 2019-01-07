@@ -38,7 +38,6 @@ class Shader {
     int createShader(GLenum shaderType, const char *shaderPath)
     {
         const char* shaderSource = readShaderFile(shaderPath).c_str();
-        std::cout << shaderPath << "\n" << shaderSource << std::endl;
         int shader = glCreateShader(shaderType);
         glShaderSource(shader, 1, &shaderSource, NULL);
         glCompileShader(shader);

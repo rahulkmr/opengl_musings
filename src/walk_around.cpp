@@ -80,11 +80,23 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     cameraFront = glm::normalize(front);
 }  
 
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+  if(fov >= 1.0f && fov <= 45.0f)
+  	fov -= yoffset;
+  if(fov <= 1.0f)
+  	fov = 1.0f;
+  if(fov >= 45.0f)
+  	fov = 45.0f;
+}
+
+
 int main()
 {
     initAndSetHints();
     GLFWwindow *window = createWindow(WIDTH, HEIGHT);
     glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -184,16 +196,12 @@ int main()
     shader.setInt("texture1", 0);
     shader.setInt("texture2", 1);
 
-    // create transformations
-    glm::mat4 projection    = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
     // retrieve the matrix uniform locations
     unsigned int modelLoc = glGetUniformLocation(shader.ID, "model");
     unsigned int viewLoc  = glGetUniformLocation(shader.ID, "view");
     unsigned int projectionLoc = glGetUniformLocation(shader.ID, "projection");
 
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
     // render loop
     // -----------
@@ -220,6 +228,9 @@ int main()
 
         // render container
         shader.use();
+
+        glm::mat4 projection = glm::perspective(glm::radians(fov), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
         glm::mat4 view  = glm::lookAt(
             cameraPos,

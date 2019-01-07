@@ -71,3 +71,9 @@ add_executable(more_cubes src/more_cubes.cpp)
 target_link_libraries(
     more_cubes ${OPENGL_LIBRARIES} glfw glad shader utils
 )
+
+
+add_executable(rotate_camera src/rotate_camera.cpp)
+target_link_libraries(
+    rotate_camera ${OPENGL_LIBRARIES} glfw glad shader utils
+)

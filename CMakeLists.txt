@@ -54,3 +54,9 @@ add_executable(transform src/transform.cpp)
 target_link_libraries(
     transform ${OPENGL_LIBRARIES} glfw glad shader utils
 )
+
+
+add_executable(coordinates src/coordinates.cpp)
+target_link_libraries(
+    coordinates ${OPENGL_LIBRARIES} glfw glad shader utils
+)

@@ -1,10 +1,8 @@
 #include "shader.h"
 
-Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
-    const char *vShaderCode = readShaderFile(vertexPath);
-    const char *fShaderCode = readShaderFile(fragmentPath);
-    unsigned int vertex = createShader(GL_VERTEX_SHADER, vShaderCode);
-    unsigned int fragment = createShader(GL_FRAGMENT_SHADER, fShaderCode);
+Shader::Shader(const GLchar *vertexShaderPath, const GLchar *fragmentShaderPath) {
+    unsigned int vertex = createShader(GL_VERTEX_SHADER, vertexShaderPath);
+    unsigned int fragment = createShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
     createProgram({vertex, fragment});
 }
 

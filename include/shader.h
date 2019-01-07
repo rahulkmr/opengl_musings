@@ -19,17 +19,26 @@ class Shader {
     void setFloat(const std::string &name, float value) const;
 
   private:
-    const char *readShaderFile(const char *fileName) const
+    std::string readShaderFile(const char *fileName) const
     {
-        std::ifstream handle(fileName);
+        std::ifstream handle;
         std::stringstream buffer;
-        buffer << handle.rdbuf();
-        handle.close();
-        return buffer.str().c_str();
+        handle.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        try {
+            handle.open(fileName);
+            buffer << handle.rdbuf();
+            handle.close();
+        } catch (std::ifstream::failure ex) {
+            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+            std::cout << ex.what() << std::endl;
+        }
+        return buffer.str();
     }
 
-    int createShader(GLenum shaderType, const char *shaderSource)
+    int createShader(GLenum shaderType, const char *shaderPath)
     {
+        const char* shaderSource = readShaderFile(shaderPath).c_str();
+        std::cout << shaderPath << "\n" << shaderSource << std::endl;
         int shader = glCreateShader(shaderType);
         glShaderSource(shader, 1, &shaderSource, NULL);
         glCompileShader(shader);
@@ -57,7 +66,7 @@ class Shader {
         glLinkProgram(ID);
         int success;
         char infoLog[512];
-        glGetProgramiv(ID, GL_COMPILE_STATUS, &success);
+        glGetProgramiv(ID, GL_LINK_STATUS, &success);
         if (!success)
         {
             glGetProgramInfoLog(ID, 512, nullptr, infoLog);

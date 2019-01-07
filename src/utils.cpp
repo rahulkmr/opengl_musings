@@ -51,9 +51,9 @@ unsigned int createProgram(std::initializer_list<unsigned int> shaders) {
     return program;
 }
 
-unsigned int createTexture(const char* textureFileName) {
-    unsigned int texture;
-    glGenTextures(1, &texture);
+void createTexture(unsigned int* texture, const char* textureFileName) {
+    glGenTextures(1, texture);
+    glBindTexture(GL_TEXTURE_2D, *texture);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -69,5 +69,4 @@ unsigned int createTexture(const char* textureFileName) {
         std::cout << "Failed to load texture." << std::endl;
     }
     stbi_image_free(data);
-    return texture;
 }

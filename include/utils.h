@@ -13,6 +13,6 @@ unsigned int createShader(GLenum shaderType, const char* shaderSource);
 
 unsigned int createProgram(std::initializer_list<unsigned int> shaders);
 
-unsigned int createTexture(const char* textureFileName);
+void createTexture(unsigned int* texture, const char* textureFileName);
 
 #endif

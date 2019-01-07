@@ -72,7 +72,9 @@ int main()
 
     // load and create a texture
     // -------------------------
-    unsigned int texture = createTexture("container.jpg");
+    unsigned int texture;
+    createTexture(&texture, "container.jpg");
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))

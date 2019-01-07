@@ -20,6 +20,7 @@ float lastY = HEIGHT / 2.0f;
 bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 
 void processInput(GLFWwindow *window) {
@@ -80,7 +81,8 @@ int main()
     glEnable(GL_DEPTH_TEST);
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader shader("coordinates.vs.glsl", "coordinates.fs.glsl");
+    Shader shader("lighting.vs.glsl", "lighting.fs.glsl");
+    Shader lamp("lamp.vs.glsl", "lamp.fs.glsl");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -150,17 +152,20 @@ int main()
     createTexture(&texture1, "container.jpg");
     createTexture(&texture2, "awesomeface.png", true, true);
 
+    unsigned int lampVAO;
+    glGenVertexArrays(1, &lampVAO);
+    glBindVertexArray(lampVAO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+
+
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
     shader.use(); // don't forget to activate/use the shader before setting uniforms!
     shader.setInt("texture1", 0);
     shader.setInt("texture2", 1);
-
-
-    // retrieve the matrix uniform locations
-    unsigned int modelLoc = glGetUniformLocation(shader.ID, "model");
-    unsigned int viewLoc  = glGetUniformLocation(shader.ID, "view");
-    unsigned int projectionLoc = glGetUniformLocation(shader.ID, "projection");
+    shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+    shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
 
     // render loop
@@ -191,16 +196,28 @@ int main()
 
         glm::mat4 projection = glm::perspective(
             glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        shader.setMat4("projection", projection);
 
         glm::mat4 view  = camera.GetViewMatrix();
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+        shader.setMat4("view", view);
 
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        shader.setMat4("model", model);
 
         glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+        lamp.use();
+        lamp.setMat4("projection", projection);
+        lamp.setMat4("view", view);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, lightPos);
+        model = glm::scale(model, glm::vec3(0.2f));
+        shader.setMat4("model", model);
+
+        glBindVertexArray(lampVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -212,6 +229,7 @@ int main()
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &lampVAO);
     glDeleteBuffers(1, &VBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.

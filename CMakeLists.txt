@@ -16,7 +16,6 @@ include_directories(
 
 add_library(glad src/glad.c)
 add_library(utils src/utils.cpp)
-add_library(shader src/shader.cpp)
 
 add_executable(hello_window src/hello_window.cpp)
 target_link_libraries(
@@ -47,49 +46,49 @@ target_link_libraries(
 
 add_executable(texture src/texture.cpp)
 target_link_libraries(
-    texture ${OPENGL_LIBRARIES} glfw glad shader utils
+    texture ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 add_executable(transform src/transform.cpp)
 target_link_libraries(
-    transform ${OPENGL_LIBRARIES} glfw glad shader utils
+    transform ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 
 add_executable(coordinates src/coordinates.cpp)
 target_link_libraries(
-    coordinates ${OPENGL_LIBRARIES} glfw glad shader utils
+    coordinates ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 
 add_executable(rotating src/rotating.cpp)
 target_link_libraries(
-    rotating ${OPENGL_LIBRARIES} glfw glad shader utils
+    rotating ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 add_executable(more_cubes src/more_cubes.cpp)
 target_link_libraries(
-    more_cubes ${OPENGL_LIBRARIES} glfw glad shader utils
+    more_cubes ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 
 add_executable(rotate_camera src/rotate_camera.cpp)
 target_link_libraries(
-    rotate_camera ${OPENGL_LIBRARIES} glfw glad shader utils
+    rotate_camera ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 
 add_executable(walk_around src/walk_around.cpp)
 target_link_libraries(
-    walk_around ${OPENGL_LIBRARIES} glfw glad shader utils
+    walk_around ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 add_executable(camera_walk_around src/camera_walk_around.cpp)
 target_link_libraries(
-    camera_walk_around ${OPENGL_LIBRARIES} glfw glad shader utils
+    camera_walk_around ${OPENGL_LIBRARIES} glfw glad utils
 )
 
 add_executable(lighting src/lighting.cpp)
 target_link_libraries(
-    lighting ${OPENGL_LIBRARIES} glfw glad shader utils
+    lighting ${OPENGL_LIBRARIES} glfw glad utils
 )

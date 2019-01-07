@@ -60,3 +60,9 @@ add_executable(coordinates src/coordinates.cpp)
 target_link_libraries(
     coordinates ${OPENGL_LIBRARIES} glfw glad shader utils
 )
+
+
+add_executable(rotating src/rotating.cpp)
+target_link_libraries(
+    rotating ${OPENGL_LIBRARIES} glfw glad shader utils
+)

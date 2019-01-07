@@ -16,6 +16,7 @@ void processInput(GLFWwindow *window)
     }
 }
 
+
 int main()
 {
     initAndSetHints();
@@ -31,7 +32,7 @@ int main()
 
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader shader("texture.v_shader", "texture.f_shader");
+    Shader shader("texture.vs.glsl", "texture.fs.glsl");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

@@ -88,3 +88,8 @@ add_executable(camera_walk_around src/camera_walk_around.cpp)
 target_link_libraries(
     camera_walk_around ${OPENGL_LIBRARIES} glfw glad shader utils
 )
+
+add_executable(lighting src/lighting.cpp)
+target_link_libraries(
+    lighting ${OPENGL_LIBRARIES} glfw glad shader utils
+)

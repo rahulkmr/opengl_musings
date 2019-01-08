@@ -87,7 +87,7 @@ class Shader
         }
         catch (std::ifstream::failure ex)
         {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ " << fileName << std::endl;
             std::cout << ex.what() << std::endl;
         }
         return buffer.str();
@@ -101,13 +101,17 @@ class Shader
         glCompileShader(shader);
 
         int success;
-        char infoLog[512];
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success)
         {
-            glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-            std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-                      << infoLog << std::endl;
+            GLint logLength;
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
+            char* infoLog = new char[logLength + 1];
+            glGetShaderInfoLog(shader, logLength, nullptr, infoLog);
+            std::cout << "ERROR::SHADER::COMPILATION_FAILED\n"
+                << shaderPath << "\n" << infoLog;
+            delete[] infoLog;
+            glDeleteShader(shader);
         }
 
         return shader;
@@ -122,16 +126,23 @@ class Shader
         }
         glLinkProgram(ID);
         int success;
-        char infoLog[512];
         glGetProgramiv(ID, GL_LINK_STATUS, &success);
         if (!success)
         {
-            glGetProgramInfoLog(ID, 512, nullptr, infoLog);
+            GLint logLength;
+            glGetProgramiv(ID, GL_INFO_LOG_LENGTH, &logLength);
+            char *infoLog = new char[logLength + 1];
+            glGetProgramInfoLog(ID, logLength, nullptr, infoLog);
             std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
-                      << infoLog << std::endl;
+                    << infoLog << "\n";
+            delete[] infoLog;
+            cleanupProgram(ID, shaders);
         }
-        for (auto shader : shaders)
-        {
+        cleanupProgram(ID, shaders);
+    }
+
+    void cleanupProgram(int programId, std::initializer_list<unsigned int> shaders) {
+        for (auto shader : shaders) {
             glDeleteShader(shader);
         }
     }

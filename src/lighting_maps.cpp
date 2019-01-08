@@ -81,7 +81,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader shader("material.vs.glsl", "material.fs.glsl");
+    Shader shader("lighting_maps.vs.glsl", "lighting_maps.fs.glsl");
     Shader lamp("lamp.vs.glsl", "lamp.fs.glsl");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes

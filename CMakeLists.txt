@@ -92,3 +92,9 @@ add_executable(lighting src/lighting.cpp)
 target_link_libraries(
     lighting ${OPENGL_LIBRARIES} glfw glad utils
 )
+
+
+add_executable(material src/material.cpp)
+target_link_libraries(
+    material ${OPENGL_LIBRARIES} glfw glad utils
+)

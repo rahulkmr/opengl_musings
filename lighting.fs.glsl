@@ -7,7 +7,6 @@ in vec3 Normal;
 
 // texture sampler
 uniform sampler2D texture1;
-uniform sampler2D texture2;
 
 uniform vec3 lightPos;
 uniform vec3 viewPos;

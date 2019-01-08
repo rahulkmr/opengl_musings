@@ -154,7 +154,7 @@ int main()
     // load and create a texture
     // -------------------------
     unsigned int texture1;
-    createTexture(&texture1, "container.jpg");
+    createTexture(&texture1, "container2.png");
 
     unsigned int lampVAO;
     glGenVertexArrays(1, &lampVAO);
@@ -168,18 +168,16 @@ int main()
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
     shader.use(); // don't forget to activate/use the shader before setting uniforms!
-    shader.setInt("texture1", 0);
+    shader.setInt("material.diffuse", 0);
+
     shader.setVec3("light.position", lightPos);
-    shader.setVec3("viewPos", camera.Position);
 
     shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
     shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
     shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
-    shader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
-    shader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
     shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-    shader.setFloat("material.shininess", 32.0f);
+    shader.setFloat("material.shininess", 64.0f);
 
 
     // render loop
@@ -205,6 +203,7 @@ int main()
 
         // render container
         shader.use();
+        shader.setVec3("viewPos", camera.Position);
 
         glm::mat4 projection = glm::perspective(
             glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);

@@ -170,7 +170,6 @@ int main()
     shader.use(); // don't forget to activate/use the shader before setting uniforms!
     shader.setInt("texture1", 0);
     shader.setVec3("light.position", lightPos);
-    shader.setVec3("viewPos", camera.Position);
 
     shader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
     shader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
@@ -205,6 +204,7 @@ int main()
 
         // render container
         shader.use();
+        shader.setVec3("viewPos", camera.Position);
 
         glm::mat4 projection = glm::perspective(
             glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);

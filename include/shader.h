@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <cstdio>
 
 class Shader
 {
@@ -74,31 +75,32 @@ class Shader
     }
 
   private:
-    std::string readShaderFile(const char *fileName) const
-    {
-        std::ifstream handle;
-        std::stringstream buffer;
-        handle.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        try
-        {
-            handle.open(fileName);
-            buffer << handle.rdbuf();
-            handle.close();
-        }
-        catch (std::ifstream::failure ex)
-        {
+    const char* readShaderFile(const char *fileName) const {
+        char* buffer = nullptr;
+        long length;
+        FILE* fp = fopen(fileName, "rb");
+        if (fp) {
+            fseek(fp, 0, SEEK_END);
+            length = ftell(fp);
+            fseek(fp, 0, SEEK_SET);
+            buffer = new char[length + 1];
+            fread(buffer, 1, length, fp);
+            buffer[length] = '\0';
+            fclose(fp);
+        } else {
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ " << fileName << std::endl;
-            std::cout << ex.what() << std::endl;
         }
-        return buffer.str();
+        return buffer;
     }
 
     int createShader(GLenum shaderType, const char *shaderPath)
     {
-        const char *shaderSource = readShaderFile(shaderPath).c_str();
+        const char *shaderSource = readShaderFile(shaderPath);
+        std::cout << shaderPath << "\n" << shaderSource << "\n\n" << std::endl;
         int shader = glCreateShader(shaderType);
         glShaderSource(shader, 1, &shaderSource, NULL);
         glCompileShader(shader);
+        delete[] shaderSource;
 
         int success;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);

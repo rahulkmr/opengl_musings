@@ -93,14 +93,11 @@ class Shader
         return buffer;
     }
 
-    int createShader(GLenum shaderType, const char *shaderPath)
-    {
+    int createShader(GLenum shaderType, const char *shaderPath) {
         const char *shaderSource = readShaderFile(shaderPath);
-        std::cout << shaderPath << "\n" << shaderSource << "\n\n" << std::endl;
         int shader = glCreateShader(shaderType);
         glShaderSource(shader, 1, &shaderSource, NULL);
         glCompileShader(shader);
-        delete[] shaderSource;
 
         int success;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
@@ -111,11 +108,14 @@ class Shader
             char* infoLog = new char[logLength + 1];
             glGetShaderInfoLog(shader, logLength, nullptr, infoLog);
             std::cout << "ERROR::SHADER::COMPILATION_FAILED\n"
-                << shaderPath << "\n" << infoLog;
+                      << shaderPath << "\n"
+                      << infoLog << "\n"
+                      << shaderSource << "\n\n" << std::endl;
             delete[] infoLog;
             glDeleteShader(shader);
         }
 
+        delete[] shaderSource;
         return shader;
     }
 

@@ -1,17 +1,20 @@
 #version 330 core
 out vec4 FragColor;
 
-in vec3 Normal;
-in vec3 FragPos;
 in vec2 TexCoord;
+in vec3 FragPos;
+in vec3 Normal;
 
 // texture sampler
 uniform sampler2D texture1;
 uniform sampler2D texture2;
+
 uniform vec3 lightPos;
 uniform vec3 viewPos;
+
 uniform vec3 objectColor;
 uniform vec3 lightColor;
+
 
 void main()
 {
@@ -30,6 +33,7 @@ void main()
 	vec3 specular = specularStrength * spec * lightColor;
 
 	vec3 result = (ambient + diffuse + specular) * objectColor;
+
 	FragColor = mix(
 		texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2
 	) * vec4(result, 1.0);

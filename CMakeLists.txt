@@ -98,3 +98,9 @@ add_executable(material src/material.cpp)
 target_link_libraries(
     material ${OPENGL_LIBRARIES} glfw glad utils
 )
+
+
+add_executable(lighting_maps src/lighting_maps.cpp)
+target_link_libraries(
+    lighting_maps ${OPENGL_LIBRARIES} glfw glad utils
+)

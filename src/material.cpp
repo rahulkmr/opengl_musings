@@ -81,7 +81,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
     // build and compile our shader zprogram
     // ------------------------------------
-    Shader shader("lighting.vs.glsl", "lighting.fs.glsl");
+    Shader shader("material.vs.glsl", "material.fs.glsl");
     Shader lamp("lamp.vs.glsl", "lamp.fs.glsl");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -153,9 +153,8 @@ int main()
 
     // load and create a texture
     // -------------------------
-    unsigned int texture1, texture2;
+    unsigned int texture1;
     createTexture(&texture1, "container.jpg");
-    createTexture(&texture2, "awesomeface.png", true, true);
 
     unsigned int lampVAO;
     glGenVertexArrays(1, &lampVAO);
@@ -170,11 +169,13 @@ int main()
     // -------------------------------------------------------------------------------------------
     shader.use(); // don't forget to activate/use the shader before setting uniforms!
     shader.setInt("texture1", 0);
-    shader.setInt("texture2", 1);
-    shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
     shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
     shader.setVec3("lightPos", lightPos);
     shader.setVec3("viewPos", camera.Position);
+    shader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
+    shader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
+    shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    shader.setFloat("material.shininess", 32.0f);
 
 
     // render loop
@@ -197,8 +198,6 @@ int main()
         // bind Texture
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2);
 
         // render container
         shader.use();

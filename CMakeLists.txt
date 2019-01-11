@@ -100,7 +100,7 @@ target_link_libraries(
 )
 
 
-add_executable(lighting_maps src/lighting_maps.cpp)
+add_executable(maps src/maps.cpp)
 target_link_libraries(
-    lighting_maps ${OPENGL_LIBRARIES} glfw glad utils
+    maps ${OPENGL_LIBRARIES} glfw glad utils
 )

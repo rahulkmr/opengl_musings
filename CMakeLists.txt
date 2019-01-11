@@ -7,9 +7,11 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(assimp REQUIRED)
 include_directories(
     ${OPENGL_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
+    ${ASSIMP_INCLUDE_DIRS}
     ${PROJECT_SOURCE_DIR}/include
 )
 
@@ -121,4 +123,10 @@ target_link_libraries(
 add_executable(multiple_lights src/multiple_lights.cpp)
 target_link_libraries(
     multiple_lights ${OPENGL_LIBRARIES} glfw glad utils
+)
+
+
+add_executable(load_model src/load_model.cpp)
+target_link_libraries(
+    load_model ${OPENGL_LIBRARIES} glfw glad ${ASSIMP_LIBRARIES}
 )

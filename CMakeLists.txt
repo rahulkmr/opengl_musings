@@ -130,3 +130,9 @@ add_executable(load_model src/load_model.cpp)
 target_link_libraries(
     load_model ${OPENGL_LIBRARIES} glfw glad ${ASSIMP_LIBRARIES}
 )
+
+
+add_executable(cubemap src/cubemap.cpp)
+target_link_libraries(
+    cubemap ${OPENGL_LIBRARIES} glfw glad
+)

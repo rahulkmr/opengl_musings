@@ -116,3 +116,9 @@ add_executable(point_light src/point_light.cpp)
 target_link_libraries(
     point_light ${OPENGL_LIBRARIES} glfw glad utils
 )
+
+
+add_executable(multiple_lights src/multiple_lights.cpp)
+target_link_libraries(
+    multiple_lights ${OPENGL_LIBRARIES} glfw glad utils
+)

@@ -104,3 +104,9 @@ add_executable(maps src/maps.cpp)
 target_link_libraries(
     maps ${OPENGL_LIBRARIES} glfw glad utils
 )
+
+
+add_executable(directional src/directional.cpp)
+target_link_libraries(
+    directional ${OPENGL_LIBRARIES} glfw glad utils
+)

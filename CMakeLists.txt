@@ -110,3 +110,9 @@ add_executable(directional src/directional.cpp)
 target_link_libraries(
     directional ${OPENGL_LIBRARIES} glfw glad utils
 )
+
+
+add_executable(point_light src/point_light.cpp)
+target_link_libraries(
+    point_light ${OPENGL_LIBRARIES} glfw glad utils
+)

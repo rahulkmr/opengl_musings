@@ -166,3 +166,9 @@ add_executable(explode src/explode.cpp)
 target_link_libraries(
     explode ${OPENGL_LIBRARIES} glfw glad ${ASSIMP_LIBRARIES}
 )
+
+
+add_executable(instancing src/instancing.cpp)
+target_link_libraries(
+    instancing ${OPENGL_LIBRARIES} glfw glad
+)

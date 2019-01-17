@@ -76,7 +76,7 @@ int main()
 
      // build and compile shaders
     // -------------------------
-    Shader shader("blending.vs.glsl", "blending.fs.glsl");
+    Shader shader("discard.vs.glsl", "discard.fs.glsl");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

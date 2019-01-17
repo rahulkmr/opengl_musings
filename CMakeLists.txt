@@ -136,3 +136,9 @@ add_executable(cubemap src/cubemap.cpp)
 target_link_libraries(
     cubemap ${OPENGL_LIBRARIES} glfw glad
 )
+
+
+add_executable(stencil src/stencil.cpp)
+target_link_libraries(
+    stencil ${OPENGL_LIBRARIES} glfw glad
+)

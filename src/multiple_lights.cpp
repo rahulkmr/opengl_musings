@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 float lastX = WIDTH / 2.0f;
 float lastY = HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -234,7 +234,7 @@ int main()
     lightingShader.setVec3("spotLight.position", camera.Position);
     lightingShader.setVec3("spotLight.direction", camera.Front);
     lightingShader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-    lightingShader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+    lightingShader.setVec3("spotLight.diffuse", 5.0f, 5.0f, 5.0f);
     lightingShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
     lightingShader.setFloat("spotLight.constant", 1.0f);
     lightingShader.setFloat("spotLight.linear", 0.09);

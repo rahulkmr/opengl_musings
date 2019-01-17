@@ -142,3 +142,9 @@ add_executable(stencil src/stencil.cpp)
 target_link_libraries(
     stencil ${OPENGL_LIBRARIES} glfw glad
 )
+
+
+add_executable(discard src/discard.cpp)
+target_link_libraries(
+    discard ${OPENGL_LIBRARIES} glfw glad
+)

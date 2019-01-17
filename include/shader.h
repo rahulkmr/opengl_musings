@@ -15,11 +15,13 @@ class Shader
   public:
     unsigned int ID;
 
-    Shader(const GLchar *vertexShaderPath, const GLchar *fragmentShaderPath)
+    Shader(const GLchar *vertexShaderPath, const GLchar *fragmentShaderPath,
+        const GLchar* geometryShader = nullptr)
     {
         unsigned int vertex = createShader(GL_VERTEX_SHADER, vertexShaderPath);
         unsigned int fragment = createShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
-        createProgram({vertex, fragment});
+        unsigned int geometry = createShader(GL_GEOMETRY_SHADER, geometryShader);
+        createProgram({vertex, fragment, geometry});
     }
 
     void use() {
@@ -94,6 +96,9 @@ class Shader
     }
 
     int createShader(GLenum shaderType, const char *shaderPath) {
+        if (shaderPath == nullptr) {
+            return -1;
+        }
         const char *shaderSource = readShaderFile(shaderPath);
         int shader = glCreateShader(shaderType);
         glShaderSource(shader, 1, &shaderSource, NULL);
@@ -124,7 +129,9 @@ class Shader
         ID = glCreateProgram();
         for (auto shader : shaders)
         {
-            glAttachShader(ID, shader);
+            if (shader != -1) {
+                glAttachShader(ID, shader);
+            }
         }
         glLinkProgram(ID);
         int success;
@@ -145,7 +152,9 @@ class Shader
 
     void cleanupProgram(int programId, std::initializer_list<unsigned int> shaders) {
         for (auto shader : shaders) {
-            glDeleteShader(shader);
+            if (shader != -1) {
+                glDeleteShader(shader);
+            }
         }
     }
 };

@@ -160,3 +160,9 @@ add_executable(framebuffer src/framebuffer.cpp)
 target_link_libraries(
     framebuffer ${OPENGL_LIBRARIES} glfw glad
 )
+
+
+add_executable(explode src/explode.cpp)
+target_link_libraries(
+    explode ${OPENGL_LIBRARIES} glfw glad ${ASSIMP_LIBRARIES}
+)

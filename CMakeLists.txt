@@ -154,3 +154,9 @@ add_executable(blending src/blending.cpp)
 target_link_libraries(
     blending ${OPENGL_LIBRARIES} glfw glad
 )
+
+
+add_executable(framebuffer src/framebuffer.cpp)
+target_link_libraries(
+    framebuffer ${OPENGL_LIBRARIES} glfw glad
+)

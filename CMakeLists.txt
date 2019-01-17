@@ -148,3 +148,9 @@ add_executable(discard src/discard.cpp)
 target_link_libraries(
     discard ${OPENGL_LIBRARIES} glfw glad
 )
+
+
+add_executable(blending src/blending.cpp)
+target_link_libraries(
+    blending ${OPENGL_LIBRARIES} glfw glad
+)
